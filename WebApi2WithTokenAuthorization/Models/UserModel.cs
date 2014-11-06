@@ -5,6 +5,10 @@ namespace WebApi2WithTokenAuthorization.Models
     public class UserModel
     {
         [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 

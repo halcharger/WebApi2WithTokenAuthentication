@@ -1,41 +1,40 @@
 ﻿using System;
+using System.Configuration;
 using System.Threading.Tasks;
+using AdaptiveSystems.AspNetIdentity.AzureTableStorage;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using WebApi2WithTokenAuthorization.Models;
 
 namespace WebApi2WithTokenAuthorization
 {
     public class AuthRepository : IDisposable
     {
-        private AuthContext _ctx;
-
-        private UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public AuthRepository()
         {
-            _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            var cs = ConfigurationManager.ConnectionStrings["UserStore-ConnectionString"].ConnectionString;
+            _userManager = new UserManager<User>(new UserStore<User>(cs));
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            var user = new IdentityUser
+            var user = new User
             {
-                UserName = userModel.UserName
+                UserName = userModel.UserName, 
+                Email = userModel.Email
             };
 
             return await _userManager.CreateAsync(user, userModel.Password);
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<User> FindUser(string userName, string password)
         {
             return await _userManager.FindAsync(userName, password);
         }
 
         public void Dispose()
         {
-            _ctx.Dispose();
             _userManager.Dispose();
         }
     }

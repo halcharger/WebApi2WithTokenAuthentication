@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security.OAuth;
 
 namespace WebApi2WithTokenAuthorization.Providers
@@ -16,9 +15,9 @@ namespace WebApi2WithTokenAuthorization.Providers
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            using (var _repo = new AuthRepository())
+            using (var repo = new AuthRepository())
             {
-                var user = await _repo.FindUser(context.UserName, context.Password);
+                var user = await repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {
