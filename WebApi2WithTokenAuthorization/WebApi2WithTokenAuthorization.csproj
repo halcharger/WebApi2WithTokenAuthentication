@@ -102,9 +102,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NExtensions, Version=1.0.27.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NExtensions, Version=1.0.29.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NExtensions.1.0.27.0\lib\net45\NExtensions.dll</HintPath>
+      <HintPath>..\packages\NExtensions.1.0.29.0\lib\net45\NExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -169,6 +169,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

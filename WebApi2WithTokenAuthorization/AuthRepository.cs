@@ -57,6 +57,8 @@ namespace WebApi2WithTokenAuthorization
                 await RemoveRefreshToken(existingTokens.First());
             }
 
+            token.Timestamp = DateTime.UtcNow;
+            token.ETag = "*";
             token.SetPartionAndRowKeys();
             var insertOperation = TableOperation.Insert(token);
             var result = await _tables.RefreshTokenTable.ExecuteAsync(insertOperation);
@@ -91,7 +93,7 @@ namespace WebApi2WithTokenAuthorization
 
         public async Task<RefreshToken> FindRefreshToken(string refreshTokenId)
         {
-            var result = await _tables.RefreshTokenTable.ExecuteAsync(TableOperation.Retrieve<RefreshToken>(RefreshToken.PartitionKeyValue, refreshTokenId.Hash()));
+            var result = await _tables.RefreshTokenTable.ExecuteAsync(TableOperation.Retrieve<RefreshToken>(RefreshToken.PartitionKeyValue, refreshTokenId));
 
             return (RefreshToken)result.Result;
         }

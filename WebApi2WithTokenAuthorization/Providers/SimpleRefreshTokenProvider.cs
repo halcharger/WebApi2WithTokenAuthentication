@@ -30,7 +30,7 @@ namespace WebApi2WithTokenAuthorization.Providers
 
                 var token = new RefreshToken()
                 {
-                    Id = refreshTokenId.Hash(),
+                    Id = refreshTokenId.HashEncodedForRowKey(),
                     ClientId = clientid,
                     User = context.Ticket.Identity.Name,
                     IssuedUtc = DateTime.UtcNow,
@@ -42,11 +42,18 @@ namespace WebApi2WithTokenAuthorization.Providers
 
                 token.ProtectedTicket = context.SerializeTicket();
 
-                var result = await repo.AddRefreshToken(token);
-
-                if (result)
+                try
                 {
-                    context.SetToken(refreshTokenId);
+                    var result = await repo.AddRefreshToken(token);
+
+                    if (result)
+                    {
+                        context.SetToken(refreshTokenId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
                 }
 
             }
@@ -62,7 +69,7 @@ namespace WebApi2WithTokenAuthorization.Providers
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            var hashedTokenId = context.Token.Hash();
+            var hashedTokenId = context.Token.HashEncodedForRowKey();
 
             using (var repo = new AuthRepository())
             {
