@@ -96,13 +96,12 @@ namespace WebApi2WithTokenAuthorization
             return (RefreshToken)result.Result;
         }
 
-        public Task<IEnumerable<RefreshToken>> GetAllRefreshTokens()
+        public Task<List<RefreshToken>> GetAllRefreshTokens()
         {
             return Task.Factory.StartNew(() =>
             {
-                var filter = TableQuery.GenerateFilterCondition(AzureTables.PartitionKeyFieldName, QueryComparisons.Equal, RefreshToken.PartitionKeyValue);
-                var query = new TableQuery<RefreshToken>().Where(filter);
-                return _tables.RefreshTokenTable.ExecuteQuery(query);
+                var tokens = _tables.RefreshTokenTable.ExecuteQuery(new TableQuery<RefreshToken>());
+                return tokens.ToList();
             });
         }
 

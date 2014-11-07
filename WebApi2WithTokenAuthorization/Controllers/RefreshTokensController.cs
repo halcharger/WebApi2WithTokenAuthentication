@@ -15,9 +15,10 @@ namespace WebApi2WithTokenAuthorization.Controllers
 
         [Authorize(Users = "Admin")]
         [Route("")]
-        public IHttpActionResult Get()
+        public async Task<IHttpActionResult> Get()
         {
-            return Ok(_repo.GetAllRefreshTokens());
+            var tokens = await _repo.GetAllRefreshTokens();
+            return Ok(tokens);
         }
 
         //[Authorize(Users = "Admin")]
