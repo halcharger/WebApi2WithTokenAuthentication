@@ -25,6 +25,9 @@ namespace WebApi2WithTokenAuthorization
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            log4net.Config.XmlConfigurator.Configure();
+
         }
 
         public void ConfigureOAuth(IAppBuilder app)
