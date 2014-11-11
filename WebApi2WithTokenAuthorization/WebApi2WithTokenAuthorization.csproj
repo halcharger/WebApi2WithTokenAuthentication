@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdaptiveSystems.AspNetIdentity.AzureTableStorage, Version=1.0.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AdaptiveSystems.AspNetIdentity.AzureTableStorage.1.0.14.0\lib\net45\AdaptiveSystems.AspNetIdentity.AzureTableStorage.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -191,12 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\AdaptiveSystems.AspNetIdentity.AzureTableStorage\src\AdaptiveSystems.AspNetIdentity.AzureTableStorage.csproj">
-      <Project>{911e9a01-9d81-4a8d-8cac-bc2a0f9f0b4b}</Project>
-      <Name>AdaptiveSystems.AspNetIdentity.AzureTableStorage</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
