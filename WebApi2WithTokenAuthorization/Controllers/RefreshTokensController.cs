@@ -13,7 +13,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
             _repo = new AuthRepository();
         }
 
-        [Authorize(Users = "Admin")]
+        [Authorize()]
         [Route("")]
         public async Task<IHttpActionResult> Get()
         {

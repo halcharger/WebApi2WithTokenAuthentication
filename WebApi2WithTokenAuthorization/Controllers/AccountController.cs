@@ -181,6 +181,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
             return Ok(accessTokenResponse);
 
         }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -340,7 +341,8 @@ namespace WebApi2WithTokenAuthorization.Controllers
         private JObject GenerateLocalAccessTokenResponse(string userName)
         {
 
-            var tokenExpiration = TimeSpan.FromDays(1);
+            //var tokenExpiration = TimeSpan.FromDays(1);
+            var tokenExpiration = TimeSpan.FromSeconds(30);
 
             var identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
