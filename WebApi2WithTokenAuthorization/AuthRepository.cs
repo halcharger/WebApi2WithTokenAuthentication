@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AdaptiveSystems.AspNetIdentity.AzureTableStorage;
 using Microsoft.AspNet.Identity;
 using Microsoft.WindowsAzure.Storage.Table;
-using NExtensions;
 using WebApi2WithTokenAuthorization.Data;
 using WebApi2WithTokenAuthorization.Entities;
 using WebApi2WithTokenAuthorization.Models;
@@ -21,8 +20,29 @@ namespace WebApi2WithTokenAuthorization
         public AuthRepository()
         {
             var cs = ConfigurationManager.ConnectionStrings["UserStore-ConnectionString"].ConnectionString;
-            _userManager = new UserManager<User>(new UserStore<User>(cs));
+            _userManager = new UserManager<User>(new AdaptiveSystems.AspNetIdentity.AzureTableStorage.UserStore<User>(cs));
             _tables = new AzureTables();
+        }
+
+        public async Task<User> FindAsync(UserLoginInfo loginInfo)
+        {
+            var user = await _userManager.FindAsync(loginInfo);
+
+            return user;
+        }
+
+        public async Task<IdentityResult> CreateAsync(User user)
+        {
+            var result = await _userManager.CreateAsync(user);
+
+            return result;
+        }
+
+        public async Task<IdentityResult> AddLoginAsync(string userId, UserLoginInfo login)
+        {
+            var result = await _userManager.AddLoginAsync(userId, login);
+
+            return result;
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)

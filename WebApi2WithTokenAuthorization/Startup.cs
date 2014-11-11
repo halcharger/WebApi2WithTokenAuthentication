@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web.Http;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Facebook;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebApi2WithTokenAuthorization.Providers;
@@ -10,6 +12,10 @@ namespace WebApi2WithTokenAuthorization
 {
     public class Startup
     {
+        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
+        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
+        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
@@ -23,7 +29,12 @@ namespace WebApi2WithTokenAuthorization
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var options = new OAuthAuthorizationServerOptions()
+            //use a cookie to temporarily store information about a user logging in with a third party login provider
+            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
+
+            OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+
+            var options = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
@@ -34,7 +45,25 @@ namespace WebApi2WithTokenAuthorization
 
             // Token Generation
             app.UseOAuthAuthorizationServer(options);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+
+            //Configure Google External Login
+            googleAuthOptions = new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "906041197601-v5v95tijskeiltb1bj2kbur9m0tha1pf.apps.googleusercontent.com",
+                ClientSecret = "FVmI7WRUV1bF0TOazSk_2I1n",
+                Provider = new GoogleAuthProvider()
+            };
+            app.UseGoogleAuthentication(googleAuthOptions);
+
+            //Configure Facebook External Login
+            facebookAuthOptions = new FacebookAuthenticationOptions()
+            {
+                AppId = "xxx",
+                AppSecret = "xxx",
+                Provider = new FacebookAuthProvider()
+            };
+            app.UseFacebookAuthentication(facebookAuthOptions);
 
         }
     }
