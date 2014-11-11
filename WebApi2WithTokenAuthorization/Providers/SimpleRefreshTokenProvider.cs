@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.Infrastructure;
-using NExtensions;
 using WebApi2WithTokenAuthorization.Entities;
 
 namespace WebApi2WithTokenAuthorization.Providers

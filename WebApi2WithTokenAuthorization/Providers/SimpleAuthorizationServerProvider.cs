@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using AdaptiveSystems.AspNetIdentity.AzureTableStorage;
-using Microsoft.AspNet.Identity.EntityFramework;
+using log4net;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using NExtensions;
@@ -14,14 +11,18 @@ namespace WebApi2WithTokenAuthorization.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private readonly ILog log = LogManager.GetLogger(typeof (SimpleAuthorizationServerProvider));
+
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             string clientId;
             string clientSecret;
             Client client;
 
+            log.Debug("Attempting to get basic credentials from query string");
             if (!context.TryGetBasicCredentials(out clientId, out clientSecret))
             {
+                log.Debug("Attempting to get basic credentials from form collection");
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
@@ -29,6 +30,7 @@ namespace WebApi2WithTokenAuthorization.Providers
             {
                 //Remove the comments from the below line context.SetError, and invalidate context 
                 //if you want to force sending clientId/secrects once obtain access tokens. 
+                log.Debug("Could not find client_id, validating context");
                 context.Validated();
                 //context.SetError("invalid_clientId", "ClientId should be sent.");
                 return;
@@ -41,19 +43,22 @@ namespace WebApi2WithTokenAuthorization.Providers
 
             if (client == null)
             {
+                log.DebugFormat("Could not find client with id: {0}, returning 'invliad_clientId' Client {0} is not registered in the system", context.ClientId);
                 context.SetError("invalid_clientId", string.Format("Client '{0}' is not registered in the system.", context.ClientId));
                 return;
             }
 
             if (client.ApplicationType == Models.ApplicationType.NativeConfidential)
             {
-                if (string.IsNullOrWhiteSpace(clientSecret))
+                if (clientSecret.IsNullOrWhiteSpace())
                 {
+                    log.Debug("Client secret is null or empty, returning 'invalid_clientSecret' Client secret should be sent"); 
                     context.SetError("invalid_clientSecret", "Client secret should be sent.");
                     return;
                 }
                 if (client.Secret != clientSecret.Hash())
                 {
+                    log.Debug("client secret not the same as hashed client secret, returning 'invalid_clientSecret' Client secret is invalid"); 
                     context.SetError("invalid_clientSecret", "Client secret is invalid.");
                     return;
                 }
@@ -61,6 +66,7 @@ namespace WebApi2WithTokenAuthorization.Providers
 
             if (!client.Active)
             {
+                log.Debug("Client is not active, returning 'invalid_clientId' Client is inactive");
                 context.SetError("invalid_clientId", "Client is inactive.");
                 return;
             }
@@ -83,6 +89,7 @@ namespace WebApi2WithTokenAuthorization.Providers
 
                 if (user == null)
                 {
+                    log.DebugFormat("Could not find user: {0}, returning 'invalid_grant' the username or password is incorrect", context.UserName);
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return;
                 }
@@ -126,6 +133,7 @@ namespace WebApi2WithTokenAuthorization.Providers
 
             if (originalClient != currentClient)
             {
+                log.Debug("Original client not the same as current client, returning 'invalid_clientId' Refresh tokenb is issued to a different clientId");
                 context.SetError("invalid_clientId", "Refresh token is issued to a different clientId.");
                 return Task.FromResult(0);
             }
