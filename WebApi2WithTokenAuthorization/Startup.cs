@@ -62,8 +62,8 @@ namespace WebApi2WithTokenAuthorization
             //Configure Facebook External Login
             facebookAuthOptions = new FacebookAuthenticationOptions()
             {
-                AppId = "xxx",
-                AppSecret = "xxx",
+                AppId = "1556891417855856",
+                AppSecret = "363f6b4377706c270b7ec6afaae23525",
                 Provider = new FacebookAuthProvider()
             };
             app.UseFacebookAuthentication(facebookAuthOptions);

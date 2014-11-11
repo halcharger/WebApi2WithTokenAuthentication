@@ -70,7 +70,6 @@ namespace WebApi2WithTokenAuthorization.Controllers
             user = new User { UserName = model.UserName, Email = model.Email};
             
             var result = await _repo.CreateAsync(user);
-            //var result = await _repo.RegisterUser(new UserModel { Email = user.Email, UserName = user.UserName, Password = "blahblah" });
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
