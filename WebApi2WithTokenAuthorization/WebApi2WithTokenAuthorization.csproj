@@ -181,6 +181,7 @@
     <Compile Include="Data\AzureTables.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
+    <Compile Include="GlobalExceptionHandler.cs" />
     <Compile Include="Models\ApplicationType.cs" />
     <Compile Include="Models\ExternalLoginModels.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -195,6 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\webapi2withtokenauthentication01.pubxml" />
+    <None Include="Properties\PublishProfiles\webapi2withtokenauthentication02.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

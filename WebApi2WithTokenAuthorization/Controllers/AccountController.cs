@@ -310,7 +310,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
             {
                 var clientId = Startup.microsoftAuthOptions.ClientId;
                 var clientSecret = Startup.microsoftAuthOptions.ClientSecret;
-                var redirectUri = "http://webapi2withtokenauthentication01.azurewebsites.net/signin-microsoft";
+                var redirectUri = "http://webapi2withtokenauthentication01.localtest.me/signin-microsoft";
                 verifyTokenEndPoint = string.Format("https://login.live.com/oauth20_token.srf?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}&grant_type=authorization_code", clientId, redirectUri, clientSecret, accessToken);
             }
             else

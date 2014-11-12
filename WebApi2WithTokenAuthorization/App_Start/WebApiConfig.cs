@@ -22,6 +22,8 @@ namespace WebApi2WithTokenAuthorization
 
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            GlobalConfiguration.Configuration.Filters.Add(new GlobalExceptionHandler());
         }
     }
 }
