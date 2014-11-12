@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using Elmah.Contrib.WebApi;
 using Newtonsoft.Json.Serialization;
 
 namespace WebApi2WithTokenAuthorization
@@ -23,7 +25,8 @@ namespace WebApi2WithTokenAuthorization
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            GlobalConfiguration.Configuration.Filters.Add(new GlobalExceptionHandler());
+            config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
+            GlobalConfiguration.Configuration.Filters.Add(new ElmahHandleErrorApiAttribute());
         }
     }
 }
