@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AdaptiveSystems.AspNetIdentity.AzureTableStorage;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -19,6 +20,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
+        private static ILog _log = LogManager.GetLogger(typeof (AccountController));
         private readonly AuthRepository _repo;
 
         public AccountController()
@@ -304,6 +306,13 @@ namespace WebApi2WithTokenAuthorization.Controllers
             {
                 verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
             }
+            else if (provider == "Microsoft")
+            {
+                var clientId = Startup.microsoftAuthOptions.ClientId;
+                var clientSecret = Startup.microsoftAuthOptions.ClientSecret;
+                var redirectUri = "http://webapi2withtokenauthentication01.azurewebsites.net/signin-microsoft";
+                verifyTokenEndPoint = string.Format("https://login.live.com/oauth20_token.srf?client_id={0}&redirect_uri={1}&client_secret={2}&code={3}&grant_type=authorization_code", clientId, redirectUri, clientSecret, accessToken);
+            }
             else
             {
                 return null;
@@ -341,6 +350,10 @@ namespace WebApi2WithTokenAuthorization.Controllers
                         return null;
                     }
 
+                }
+                else if (provider == "Microsoft")
+                {
+                    _log.DebugFormat("Twitter returned data: {0}", jObj.ToString());
                 }
 
             }

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.MicrosoftAccount;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using WebApi2WithTokenAuthorization.Providers;
@@ -16,6 +16,7 @@ namespace WebApi2WithTokenAuthorization
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
         public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
         public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+        public static MicrosoftAccountAuthenticationOptions microsoftAuthOptions { get; private set; }
 
         public void Configuration(IAppBuilder app)
         {
@@ -69,6 +70,15 @@ namespace WebApi2WithTokenAuthorization
             };
             facebookAuthOptions.Scope.Add("email");
             app.UseFacebookAuthentication(facebookAuthOptions);
+
+            //configure Microsoft external login
+            microsoftAuthOptions = new MicrosoftAccountAuthenticationOptions
+            {
+                ClientId = "0000000048131E21",
+                ClientSecret = "r-I7BrnlogBFQGc2BlAfFQeYMRMHLF9r", 
+                Provider = new MicrosoftAccountAuthenticationProvider()
+            };
+            app.UseMicrosoftAccountAuthentication(microsoftAuthOptions);
 
         }
     }
