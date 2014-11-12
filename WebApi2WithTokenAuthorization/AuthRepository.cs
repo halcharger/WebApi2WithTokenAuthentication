@@ -61,6 +61,16 @@ namespace WebApi2WithTokenAuthorization
             return await _userManager.FindAsync(userName, password);
         }
 
+        public async Task<User> FindUser(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
+
+        public async Task UpdateUser(User user)
+        {
+            await _userManager.UpdateAsync(user);
+        }
+
         public async Task<Client> FindClient(string clientId)
         {
             var result = await _tables.ClientsTable.ExecuteAsync(TableOperation.Retrieve<Client>(Client.PartitionKeyValue, clientId));

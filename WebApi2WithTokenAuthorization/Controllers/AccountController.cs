@@ -132,6 +132,17 @@ namespace WebApi2WithTokenAuthorization.Controllers
 
             var user = await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
+            //look for user with email, if user exists, add this external login to that users profile, if not, carry on below
+            if (user == null)
+            {
+                //email, not username is what truly uniquely identifies a user
+                user = await _repo.FindUser(externalLogin.Email);
+                if (user != null)
+                {
+                    await _repo.AddLoginAsync(user.Id, new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+                }
+            }
+
             var hasRegistered = user != null;
 
             redirectUriValidationResult = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}&external_email={5}",
@@ -286,7 +297,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
                 //You can get it from here: https://developers.facebook.com/tools/accesstoken/
                 //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
 
-                var appToken = "xxxxx";
+                var appToken = "1556891417855856|JYGY7Y6WLwDEYWxVQPzxA7Qdb14";
                 verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
             }
             else if (provider == "Google")
@@ -339,9 +350,7 @@ namespace WebApi2WithTokenAuthorization.Controllers
 
         private JObject GenerateLocalAccessTokenResponse(string userName)
         {
-
-            //var tokenExpiration = TimeSpan.FromDays(1);
-            var tokenExpiration = TimeSpan.FromSeconds(30);
+            var tokenExpiration = TimeSpan.FromDays(1);
 
             var identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 

@@ -38,9 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdaptiveSystems.AspNetIdentity.AzureTableStorage, Version=1.0.16.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AdaptiveSystems.AspNetIdentity.AzureTableStorage, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AdaptiveSystems.AspNetIdentity.AzureTableStorage.1.0.16.0\lib\net45\AdaptiveSystems.AspNetIdentity.AzureTableStorage.dll</HintPath>
+      <HintPath>..\packages\AdaptiveSystems.AspNetIdentity.AzureTableStorage.1.0.17.0\lib\net45\AdaptiveSystems.AspNetIdentity.AzureTableStorage.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

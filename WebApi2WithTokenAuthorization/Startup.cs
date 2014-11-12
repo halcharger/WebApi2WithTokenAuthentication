@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
@@ -64,8 +65,9 @@ namespace WebApi2WithTokenAuthorization
             {
                 AppId = "1556891417855856",
                 AppSecret = "363f6b4377706c270b7ec6afaae23525",
-                Provider = new FacebookAuthProvider()
+                Provider = new FacebookAuthProvider(),
             };
+            facebookAuthOptions.Scope.Add("email");
             app.UseFacebookAuthentication(facebookAuthOptions);
 
         }
