@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi2WithTokenAuthorization", "WebApi2WithTokenAuthorization\WebApi2WithTokenAuthorization.csproj", "{8A9F2319-D524-478D-A347-8A6FD44CA023}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAAE8AAA-6CF0-41EA-8888-E61A22FC7E3F}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
@@ -12,20 +10,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeleteTables", "DeleteTables\DeleteTables.csproj", "{1BAC4BA0-B76C-48BF-9C42-65CADA09AFBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdaptiveSystems.AspNetIdentity.OAuth", "AdaptiveSystems.AspNetIdentity.OAuth\AdaptiveSystems.AspNetIdentity.OAuth.csproj", "{978F8087-50A7-455B-8AE0-9E448AEB9DFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi2WithTokenAuthentication", "WebApi2WithTokenAuthentication02\WebApi2WithTokenAuthentication.csproj", "{F32D3A9F-CF57-4AE7-944E-AD8EAB494EB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8A9F2319-D524-478D-A347-8A6FD44CA023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A9F2319-D524-478D-A347-8A6FD44CA023}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A9F2319-D524-478D-A347-8A6FD44CA023}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A9F2319-D524-478D-A347-8A6FD44CA023}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BAC4BA0-B76C-48BF-9C42-65CADA09AFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1BAC4BA0-B76C-48BF-9C42-65CADA09AFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BAC4BA0-B76C-48BF-9C42-65CADA09AFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BAC4BA0-B76C-48BF-9C42-65CADA09AFBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{978F8087-50A7-455B-8AE0-9E448AEB9DFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{978F8087-50A7-455B-8AE0-9E448AEB9DFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{978F8087-50A7-455B-8AE0-9E448AEB9DFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{978F8087-50A7-455B-8AE0-9E448AEB9DFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F32D3A9F-CF57-4AE7-944E-AD8EAB494EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F32D3A9F-CF57-4AE7-944E-AD8EAB494EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F32D3A9F-CF57-4AE7-944E-AD8EAB494EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F32D3A9F-CF57-4AE7-944E-AD8EAB494EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
